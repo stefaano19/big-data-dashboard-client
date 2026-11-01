@@ -1,16 +1,52 @@
-# progetto_big_data_frontend
+# Animal Production Data Explorer
 
-A new Flutter project.
+This Flutter application presents data about animal production in the United States. Its dashboard summarizes the dataset and highlights leading states and products. Additional views show production on a map, yearly record counts, related-product association rules, and production by state and year.
 
-## Getting Started
+The app is written in Dart with Flutter (Dart SDK constraint: `^3.5.4`). Flutter platform projects are present for Android, iOS, web, macOS, Windows, and Linux.
 
-This project is a starting point for a Flutter application.
+## Requirements
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter SDK with Dart 3.5.4 or later (within the Dart 3.x release line).
+- The companion data API, when using data-backed views. The frontend calls `http://127.0.0.1:8000`; that address is hard-coded in the app. The API server is not included in this repository.
+- Network access to OpenStreetMap tile servers for map tiles.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Because the API address uses loopback, it refers to the device running the app. For an emulator, phone, or remote deployment, the API address may need to be changed to a host reachable from that device.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Run locally
+
+```sh
+git clone https://github.com/stefaano19/big-data-dashboard-client.git
+cd big-data-dashboard-client
+flutter pub get
+flutter run
+```
+
+Choose a connected device or simulator with `flutter devices` if Flutter does not select a target automatically.
+
+## Backend API
+
+The frontend currently requests these routes from `http://127.0.0.1:8000`:
+
+| Route | Used for |
+| --- | --- |
+| `/tot_rows` | Dataset row count |
+| `/tot_columns` | Dataset column count |
+| `/source` | Census and survey counts |
+| `/top_state` | Leading state and its coordinates/count |
+| `/top_products` | Most frequent products |
+| `/data_years` | Record counts by year |
+| `/association_rules` | Related-product association rules |
+| `/production_by_state_year?year=...&state=...` | Production by selected state and year |
+| `/production_state?state=...` | Map query for a state |
+| `/production_states?product=...` | Map query for a product |
+
+These routes document the frontend's current requests; the backend implementation and its setup are outside this repository.
+
+## Check the project
+
+```sh
+flutter analyze
+flutter test
+```
+
+The checked-in widget test is still Flutter's starter counter test and does not currently describe this application's UI.
